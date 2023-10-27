@@ -24,7 +24,7 @@ export class BulletControl extends Component {
         this.isDead = true;
         setTimeout(() => {
             this.node?.destroy?.();
-        },100)
+        },10)
     }
 }
 

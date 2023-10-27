@@ -24,7 +24,7 @@ export class EnemyControl extends Component {
         this.isDead = true;
         setTimeout(() => {
             this.node?.destroy?.();
-        },300);
+        },200);
     }
 }
 
