@@ -1,11 +1,12 @@
-import { _decorator, Component, Node } from 'cc';
+import { _decorator, Component, Node, resources, SpriteFrame,Sprite } from 'cc';
 const { ccclass, property } = _decorator;
 
 @ccclass('EnemyControl')
 export class EnemyControl extends Component {
     isDead: boolean = false;
+    airplaneDeadImages = [];
     start() {
-
+        this.loadImages()
     }
 
     update(deltaTime: number) {
@@ -22,9 +23,30 @@ export class EnemyControl extends Component {
     die() {
         if(this.isDead) return;
         this.isDead = true;
+        this.playDead();
         setTimeout(() => {
             this.node?.destroy?.();
-        },200);
+        },300);
+    }
+
+    loadImages() {
+        resources.loadDir(
+            "enemy-death",
+            SpriteFrame,
+            (err, spirteFrames) => {
+                this.airplaneDeadImages = spirteFrames
+            }
+        )
+    }
+
+    playDead() {
+        for(let i = 0; i < this.airplaneDeadImages.length; i++) {
+            setTimeout(() => {
+                if (this.node?.getComponent) {
+                    this.node.getComponent(Sprite).spriteFrame = this.airplaneDeadImages[i];
+                }
+            }, i*80)
+        }
     }
 }
 
